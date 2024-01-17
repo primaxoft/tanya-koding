@@ -10,7 +10,6 @@ async function getQuestions() {
       take: 10,
     });
   } catch (error) {
-    console.log(process.env.DATABASE_URL);
     console.log(error);
     throw new Error('Gagal mendapatkan senarai soalan.');
   }
