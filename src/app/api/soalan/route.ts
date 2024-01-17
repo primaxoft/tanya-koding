@@ -31,6 +31,7 @@ export async function GET(request: NextRequest) {
       getResponseInit(StatusCodes.OK)
     );
   } catch (error) {
+    console.log(error);
     // Todo: Add sentry here
     return NextResponse.json(
       {
@@ -68,6 +69,7 @@ export async function POST(request: NextRequest) {
     const res = await chatGPTApi.sendMessage(Prompt.QuestionReceived);
     message = removeQuotes(res.text);
   } catch (error) {
+    console.log(error);
     message = FailureMessage.QuestionReceived;
   }
 
@@ -88,6 +90,7 @@ export async function POST(request: NextRequest) {
       getResponseInit(StatusCodes.CREATED)
     );
   } catch (error) {
+    console.log(error);
     // Todo: Add sentry here
     return NextResponse.json(
       {

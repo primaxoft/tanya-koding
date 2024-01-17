@@ -9,7 +9,8 @@ async function getQuestions() {
       },
       take: 10,
     });
-  } catch (_error) {
+  } catch (error) {
+    console.log(error);
     throw new Error('Gagal mendapatkan senarai soalan.');
   }
 }
