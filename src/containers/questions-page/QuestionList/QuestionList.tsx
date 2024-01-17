@@ -29,7 +29,7 @@ export default function QuestionList(props: Readonly<Props>) {
       pageParams: [],
       pages: [
         {
-          cursor: props.questions[props.questions.length - 1].id,
+          cursor: props.questions.length > 0 ? props.questions[props.questions.length - 1].id : '',
           questions: props.questions,
         },
       ],
@@ -71,7 +71,9 @@ export default function QuestionList(props: Readonly<Props>) {
   const userTimeZoneOffsetMs = userTimeZoneOffset * 60 * 1000;
 
   const haveMore = useMemo(() => {
+    if (questionsGroups.length === 0) return false;
     const lastPage = questionsGroups[questionsGroups.length - 1];
+    if (lastPage.questions.length === 0) return false;
     const lastQuestion = lastPage.questions[lastPage.questions.length - 1];
 
     return lastQuestion.questionId !== 1;

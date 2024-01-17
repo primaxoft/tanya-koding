@@ -11,7 +11,7 @@ async function getQuestions() {
     });
   } catch (error) {
     console.log(error);
-    throw new Error('Gagal mendapatkan senarai soalan.');
+    return [];
   }
 }
 
