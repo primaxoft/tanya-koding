@@ -1,14 +1,12 @@
 'use client';
 
-import Link from 'next/link';
 import type { Question } from '@prisma/client';
 import { Fragment, useCallback, useMemo, useState } from 'react';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import AnswerDialog from './AnswerDialog';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Separator } from '@/components/ui/separator';
 import { Button } from '@/components/ui/button';
+import QuestionItem from '@/containers/questions-page/Questions/QuestionList/QuestionItem';
 
 type QuestionQuery = {
   cursor: string;
@@ -84,51 +82,9 @@ export default function QuestionList(props: Readonly<Props>) {
       <ul className="flex w-full flex-col gap-6">
         {questionsGroups.map(questionGroup => (
           <Fragment key={questionGroup.cursor}>
-            {questionGroup.questions.map(question => {
-              const adjustedAskedOn = new Date(question.askedOn.getTime() - userTimeZoneOffsetMs);
-
-              const askedOn = new Intl.DateTimeFormat('ms-MY', {
-                day: 'numeric',
-                hour: '2-digit',
-                hour12: false,
-                minute: '2-digit',
-                month: 'short',
-                timeZoneName: 'longOffset',
-                year: '2-digit',
-              }).format(adjustedAskedOn);
-
-              return (
-                <li key={question.id}>
-                  <Card>
-                    <CardHeader className="p-3">
-                      <CardTitle className="text-center text-lg">Soalan #{question.questionId}</CardTitle>
-                      <CardDescription className="text-center">{askedOn}</CardDescription>
-                    </CardHeader>
-                    <Separator />
-                    <CardContent className="p-3">
-                      <p className="text-center">{question.question}</p>
-                    </CardContent>
-                    <Separator />
-                    <CardFooter className="justify-end gap-3 p-3">
-                      <Link
-                        className="underline"
-                        href={`https://twitter.com/search?q=(%23TanyaKoding${question.questionId})&f=live`}
-                        target="_blank"
-                      >
-                        Lihat jawaban
-                      </Link>
-                      <button
-                        className="rounded-full bg-blue-500 bg-gradient-to-r from-grad-start to-grad-end px-5 py-2 font-medium"
-                        onClick={handleOnSelectQuestion(question)}
-                        type="button"
-                      >
-                        Jawab
-                      </button>
-                    </CardFooter>
-                  </Card>
-                </li>
-              );
-            })}
+            {questionGroup.questions.map(question => (
+              <QuestionItem key={question.id} onAnswer={handleOnSelectQuestion} question={question} />
+            ))}
           </Fragment>
         ))}
       </ul>
