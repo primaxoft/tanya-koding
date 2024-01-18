@@ -62,12 +62,6 @@ export default function QuestionList(props: Readonly<Props>) {
 
   const handleFetchMore = useCallback(() => fetchNextPage(), [fetchNextPage]);
 
-  // Get the user's time zone offset in minutes
-  const userTimeZoneOffset = new Date().getTimezoneOffset();
-
-  // Calculate the user's time zone offset in milliseconds
-  const userTimeZoneOffsetMs = userTimeZoneOffset * 60 * 1000;
-
   const haveMore = useMemo(() => {
     if (questionsGroups.length === 0) return false;
     const lastPage = questionsGroups[questionsGroups.length - 1];
