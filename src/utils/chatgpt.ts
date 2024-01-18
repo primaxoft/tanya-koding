@@ -12,7 +12,7 @@ export const chatGPTApi =
 if (process.env.NODE_ENV !== 'production') globalForChatGPT.chatGPTApi = chatGPTApi;
 
 export enum Prompt {
-  QuestionReceived = 'Ucapan "Terima kasih kerana menghantar soalan kepada Tanya Koding" yang lawak dalam bahasa Melayu Malaysia 15-20 patah perkataan, gunakan \'kami\' sebagai ganti diri.',
+  QuestionReceived = 'Ucapan "Terima kasih kerana menghantar soalan kepada Tanya Koding" yang lawak dalam bahasa Melayu Malaysia hanya 15 hingga 20 patah perkataan, gunakan \'kami\' sebagai ganti diri.',
 }
 
 export enum FailureMessage {
@@ -28,7 +28,7 @@ export const removeQuotes = (str: string) => {
 
 export const getQuestionReceivedMessage = async () => {
   try {
-    if (process.env.NODE_ENV !== 'development') {
+    if (process.env.NODE_ENV === 'development') {
       return FailureMessage.QuestionReceived;
     }
     const res = await chatGPTApi.sendMessage(Prompt.QuestionReceived);
