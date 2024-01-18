@@ -61,7 +61,7 @@ export default function AnswerDialog(props: Readonly<Props>) {
             <hr className="w-1/4 border-gray-300" />
             <p className="text-xl font-semibold">#TanyaKoding{question?.questionId}</p>
           </header>
-          <div className="rounded-xl bg-background p-7">
+          <div className="flex min-h-52 items-center justify-center rounded-xl bg-background p-7">
             <p className="text-center text-xl font-semibold">{question?.question}</p>
           </div>
           <footer className="pt-1">
