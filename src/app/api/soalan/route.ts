@@ -6,7 +6,7 @@ import { getResponseInit } from '@/utils/response-init';
 import { prisma } from '@/db/db';
 import { createQuestionSchema } from '@/zod/schemas';
 import { isValidObjectId } from '@/utils/object-id';
-import { chatGPTApi, FailureMessage, Prompt, removeQuotes } from '@/utils/chatgpt';
+import { getQuestionReceivedMessage } from '@/utils/chatgpt';
 
 export async function GET(request: NextRequest) {
   const paramCursor = request.nextUrl.searchParams.get('cursor');
@@ -64,14 +64,7 @@ export async function POST(request: NextRequest) {
 
   const { question } = result.data;
 
-  let message: string;
-  try {
-    const res = await chatGPTApi.sendMessage(Prompt.QuestionReceived);
-    message = removeQuotes(res.text);
-  } catch (error) {
-    console.log(error);
-    message = FailureMessage.QuestionReceived;
-  }
+  const message = await getQuestionReceivedMessage();
 
   try {
     await prisma.question.create({

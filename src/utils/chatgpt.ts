@@ -25,3 +25,16 @@ export const removeQuotes = (str: string) => {
   }
   return str;
 };
+
+export const getQuestionReceivedMessage = async () => {
+  try {
+    if (process.env.NODE_ENV !== 'development') {
+      return FailureMessage.QuestionReceived;
+    }
+    const res = await chatGPTApi.sendMessage(Prompt.QuestionReceived);
+    return removeQuotes(res.text);
+  } catch (error) {
+    console.log(error);
+    return FailureMessage.QuestionReceived;
+  }
+};

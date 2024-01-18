@@ -1,6 +1,9 @@
 import { prisma } from '@/db/db';
 import QuestionList from '@/containers/questions-page/QuestionList';
 
+// TODO: Temporary solve for Vercel trailing slash revalidation issue
+export const revalidate = 0;
+
 async function getQuestions() {
   try {
     return await prisma.question.findMany({
