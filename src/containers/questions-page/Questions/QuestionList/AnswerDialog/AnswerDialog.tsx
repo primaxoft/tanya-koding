@@ -33,8 +33,23 @@ export default function AnswerDialog(props: Readonly<Props>) {
     };
   }, []);
 
-  const handleSave = useCallback(() => {
+  const handleSave = useCallback(async () => {
     if (questionRef.current === null) return;
+
+    const urlToFontFile = 'https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap';
+    const fontName = 'Inter';
+
+    const response = await fetch(urlToFontFile);
+    const fontArrayBuffer = await response.arrayBuffer();
+
+    const style = document.createElement('style');
+    style.textContent = `
+      @font-face {
+        font-family: '${fontName}';
+        src: url(${fontArrayBuffer});
+      }
+    `;
+    document.head.appendChild(style);
 
     toPng(questionRef.current).then(dataUrl => {
       const link = document.createElement('a');
