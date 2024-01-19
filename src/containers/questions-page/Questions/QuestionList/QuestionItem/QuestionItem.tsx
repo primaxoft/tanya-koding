@@ -16,6 +16,7 @@ export default function QuestionItem(props: Readonly<Props>) {
 
   // Calculate the user's time zone offset in milliseconds
   const userTimeZoneOffsetMs = userTimeZoneOffset * 60 * 1000;
+
   const adjustedAskedOn = new Date(question.askedOn.getTime() - userTimeZoneOffsetMs);
 
   const askedOn = new Intl.DateTimeFormat('ms-MY', {

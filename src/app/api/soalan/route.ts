@@ -1,7 +1,7 @@
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 import { StatusCodes } from 'http-status-codes';
-import { revalidatePath } from 'next/cache';
+import { revalidateTag } from 'next/cache';
 import { getResponseInit } from '@/utils/response-init';
 import { prisma } from '@/db/db';
 import { createQuestionSchema } from '@/zod/schemas';
@@ -73,7 +73,7 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    revalidatePath('/senarai-soalan/');
+    revalidateTag('questions');
 
     return NextResponse.json(
       {
