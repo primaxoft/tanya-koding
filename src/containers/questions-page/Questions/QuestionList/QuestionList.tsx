@@ -3,7 +3,6 @@
 import type { Question } from '@prisma/client';
 import { Fragment, useCallback, useMemo, useState } from 'react';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import axios from 'axios';
 import AnswerDialog from './AnswerDialog';
 import { Button } from '@/components/ui/button';
 import QuestionItem from '@/containers/questions-page/Questions/QuestionList/QuestionItem';
@@ -34,6 +33,7 @@ export default function QuestionList(props: Readonly<Props>) {
     },
     initialPageParam: '',
     queryFn: async ({ pageParam }) => {
+      const axios = (await import('axios')).default;
       const response = await axios.get(`/api/soalan/?cursor=${pageParam}`);
       const questionsData = response.data.questions.map((question: Question) => ({
         ...question,

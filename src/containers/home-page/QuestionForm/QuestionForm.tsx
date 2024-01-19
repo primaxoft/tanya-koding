@@ -1,6 +1,5 @@
 'use client';
 
-import axios from 'axios';
 import { StatusCodes } from 'http-status-codes';
 import { useForm } from 'react-hook-form';
 import { useCallback, useRef, useState } from 'react';
@@ -29,6 +28,7 @@ export default function QuestionForm() {
   }, []);
 
   const handleOnSubmit = handleSubmit(async data => {
+    const axios = (await import('axios')).default;
     try {
       const response = await axios.post('/api/soalan', {
         question: data.question,

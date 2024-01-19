@@ -1,6 +1,8 @@
 import { Suspense } from 'react';
 import Questions, { QuestionsLoading } from '@/containers/questions-page/Questions';
 
+export const revalidate = 0;
+
 export default async function SenaraiSoalan() {
   return (
     <main className="mx-auto flex w-full max-w-xl flex-grow flex-col items-center justify-center gap-8 px-6 py-10">
