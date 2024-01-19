@@ -1,5 +1,7 @@
 import Link from 'next/link';
 import type { Question } from '@prisma/client';
+import { ms } from 'date-fns/locale';
+import { format, formatDistanceToNowStrict } from 'date-fns';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 
@@ -11,30 +13,18 @@ type Props = {
 export default function QuestionItem(props: Readonly<Props>) {
   const { onAnswer, question } = props;
 
-  // Get the user's time zone offset in minutes
-  const userTimeZoneOffset = new Date().getTimezoneOffset();
-
-  // Calculate the user's time zone offset in milliseconds
-  const userTimeZoneOffsetMs = userTimeZoneOffset * 60 * 1000;
-
-  const adjustedAskedOn = new Date(question.askedOn.getTime() - userTimeZoneOffsetMs);
-
-  const askedOn = new Intl.DateTimeFormat('ms-MY', {
-    day: 'numeric',
-    hour: '2-digit',
-    hour12: false,
-    minute: '2-digit',
-    month: 'short',
-    timeZoneName: 'longOffset',
-    year: '2-digit',
-  }).format(adjustedAskedOn);
+  const askedOn = {
+    datetime: format(question.askedOn, 'EEEE, d MMM yyyy, HH:mm z', { locale: ms }),
+    relative: formatDistanceToNowStrict(question.askedOn, { locale: ms }),
+  };
 
   return (
     <li>
       <Card>
         <CardHeader className="p-3">
           <CardTitle className="text-center text-lg">Soalan #{question.questionId}</CardTitle>
-          <CardDescription className="text-center">{askedOn}</CardDescription>
+          <CardDescription className="text-center">{askedOn.datetime}</CardDescription>
+          <CardDescription className="text-center">({askedOn.relative} lalu)</CardDescription>
         </CardHeader>
         <Separator />
         <CardContent className="p-3">
