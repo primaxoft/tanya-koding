@@ -24,6 +24,24 @@ export default function AnswerDialog(props: Readonly<Props>) {
       }
     };
 
+    const loadFont = async () => {
+      const urlToFontFile = 'https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap';
+      const fontName = 'Inter';
+
+      const response = await fetch(urlToFontFile);
+      const fontArrayBuffer = await response.arrayBuffer();
+
+      const style = document.createElement('style');
+      style.textContent = `
+      @font-face {
+        font-family: '${fontName}';
+        src: url(${fontArrayBuffer});
+      }
+    `;
+      document.head.appendChild(style);
+    };
+
+    loadFont();
     handleWindowResize();
 
     window.addEventListener('resize', handleWindowResize);
@@ -33,27 +51,12 @@ export default function AnswerDialog(props: Readonly<Props>) {
     };
   }, []);
 
-  const handleSave = useCallback(async () => {
-    if (questionRef.current === null) return;
-
-    const urlToFontFile = 'https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap';
-    const fontName = 'Inter';
-
-    const response = await fetch(urlToFontFile);
-    const fontArrayBuffer = await response.arrayBuffer();
-
-    const style = document.createElement('style');
-    style.textContent = `
-      @font-face {
-        font-family: '${fontName}';
-        src: url(${fontArrayBuffer});
-      }
-    `;
-    document.head.appendChild(style);
+  const handleSave = useCallback(() => {
+    if (!questionRef.current) return;
 
     toPng(questionRef.current).then(dataUrl => {
       const link = document.createElement('a');
-      link.download = `tanya-koding-${question?.questionId}.png`;
+      link.download = `TanyaKoding${question?.questionId}.png`;
       link.href = dataUrl;
       link.click();
     });
@@ -89,6 +92,9 @@ export default function AnswerDialog(props: Readonly<Props>) {
           <div
             className="flex w-[29rem] flex-col gap-2 rounded-2xl bg-gradient-to-r from-grad-start to-grad-end p-5"
             ref={questionRef}
+            style={{
+              fontFamily: '"Inter", sans-serif',
+            }}
           >
             <header className="flex flex-col items-center gap-2 py-2">
               <p className="text-center text-lg font-semibold text-gray-300">Soalan</p>
