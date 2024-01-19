@@ -23,7 +23,7 @@
     "chatgpt": "^5.2.5",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
-    "html2canvas": "^1.4.1",
+    "html-to-image": "^1.11.11",
     "http-status-codes": "^2.3.0",
     "lucide-react": "^0.312.0",
     "next": "14.1.0",
