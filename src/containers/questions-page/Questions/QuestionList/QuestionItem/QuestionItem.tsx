@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import type { Question } from '@prisma/client';
 import { ms } from 'date-fns/locale';
-import { format, formatDistanceToNowStrict } from 'date-fns';
+import { format, formatDistanceToNow } from 'date-fns';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 
@@ -15,7 +15,7 @@ export default function QuestionItem(props: Readonly<Props>) {
 
   const askedOn = {
     datetime: format(question.askedOn, 'EEEE, d MMM yyyy, HH:mm z', { locale: ms }),
-    relative: formatDistanceToNowStrict(question.askedOn, { locale: ms }),
+    relative: formatDistanceToNow(question.askedOn, { locale: ms }),
   };
 
   return (
